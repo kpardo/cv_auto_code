@@ -46,9 +46,16 @@ def fix_auth(entry):
         text = text.replace(str(n), f'\\textbf{{{str(n)}}}')
     return text
 
+def fix_title(entry):
+    ## TeXify any special symbols
+    text = entry['title'].replace('<', '$<$')
+    text = text.replace('>', '$>$')
+    return text
+
 def make_item(e):
     auths = fix_auth(e)
-    title = f'\\textit{{{e["title"]}}}'
+    ti0 = fix_title(e)
+    title = f'\\textit{{{ti0}}}'
     s = ', '
     if e['journal'] == 'arXiv e-prints':
         url = f'\\href{{{e["adsurl"]}}}{{{e["eid"]}}}'
